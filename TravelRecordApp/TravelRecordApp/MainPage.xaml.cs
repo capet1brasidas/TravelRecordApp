@@ -14,6 +14,12 @@ namespace TravelRecordApp
         public MainPage()
         {
             InitializeComponent();
+
+            var assembly = typeof(MainPage);
+
+            planeImage.Source = ImageSource.FromResource("plane.png",assembly);
+            System.Diagnostics.Debug.WriteLine("RES: " + planeImage);
+
         }
 
         private void loginButton_Clicked(System.Object sender, System.EventArgs e)

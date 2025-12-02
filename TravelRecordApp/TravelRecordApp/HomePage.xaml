@@ -6,13 +6,18 @@
     x:Class="TravelRecordApp.HomePage">
 
     <TabbedPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="ToolbarItem_Clicked" />
+        <ToolbarItem Text="Add"
+                     IconImageSource="add.png"
+                     Clicked="ToolbarItem_Clicked" />
 
     </TabbedPage.ToolbarItems>
 
-    <local:HistoryPage Title="History"/>
-    <local:MapPage Title="Map"/>
-    <local:ProfilePage Title="Profile"/>
+    <local:HistoryPage Title="History"
+                       IconImageSource="home.png"/>
+    <local:MapPage Title="Map"
+                   />
+    <local:ProfilePage Title="Profile"
+                       IconImageSource="user.png"/>
 
 
 

@@ -9,8 +9,13 @@
     </ContentPage.Resources>
 
     <StackLayout
-                 Margin="15"
+                 Margin="20"
                  VerticalOptions="Center">
+        <Image x:Name="planeImage"
+               Aspect="Fill"
+               HorizontalOptions="FillAndExpand"
+               HeightRequest="150"
+               Margin="0,0,0,50"/>
         <Entry x:Name="emailEntry"
                Placeholder="Email"
                TextColor="{StaticResource blueColor}"
