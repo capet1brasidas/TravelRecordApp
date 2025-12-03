@@ -4,6 +4,7 @@ using System.Linq;
 using SQLite;
 using TravelRecordApp.Model;
 using Xamarin.Forms;
+using TravelRecordApp.Helpers;
 
 namespace TravelRecordApp
 {	
@@ -14,15 +15,19 @@ namespace TravelRecordApp
 			InitializeComponent ();
 		}
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-			using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
-			{
-                conn.CreateTable<Post>();
-                List<Post> posts = conn.Table<Post>().ToList();
-                postListView.ItemsSource = posts;
-            }
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //{
+            //             conn.CreateTable<Post>();
+            //             List<Post> posts = conn.Table<Post>().ToList();
+            //             postListView.ItemsSource = posts;
+            //         }
+            postListView.ItemsSource = null;
+
+            var posts = await Firestore.Read();
+            postListView.ItemsSource = posts;
            
 
         }

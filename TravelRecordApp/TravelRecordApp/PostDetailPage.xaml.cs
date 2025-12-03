@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SQLite;
+using TravelRecordApp.Helpers;
 using TravelRecordApp.Model;
 using Xamarin.Forms;
 
@@ -16,47 +17,70 @@ namespace TravelRecordApp
             experienceEntry.Text = selectedPost.Experience;
 		}
 
-        void updateButton_Clicked(System.Object sender, System.EventArgs e)
+        async void updateButton_Clicked(System.Object sender, System.EventArgs e)
         {
             selectedPost.Experience = experienceEntry.Text;
 
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //{
+            //    conn.CreateTable<Post>();
+            //    int rows = conn.Update(selectedPost);
+
+            //    if (rows > 0)
+            //    {
+            //        DisplayAlert("Success", "Experience successfully updated", "OK");
+
+
+            //    }
+            //    else
+            //    {
+            //        DisplayAlert("Failure", "Experience didn't update", "OK");
+            //    }
+            //}
+
+            bool result = await Firestore.Update(selectedPost);
+            if(result)
             {
-                conn.CreateTable<Post>();
-                int rows = conn.Update(selectedPost);
+                DisplayAlert("Success", "Experience successfully updated", "OK");
 
-                if (rows > 0)
-                {
-                    DisplayAlert("Success", "Experience successfully updated", "OK");
-         
 
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Experience didn't update", "OK");
-                }
+            }
+            else
+            {
+                DisplayAlert("Failure", "Experience didn't update", "OK");
             }
 
         }
 
-        void deleteButton_Clicked(System.Object sender, System.EventArgs e)
+            async void deleteButton_Clicked(System.Object sender, System.EventArgs e)
         {
-            using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+            //{
+            //    conn.CreateTable<Post>();
+            //    int rows = conn.Delete(selectedPost);
+
+            //    if (rows > 0)
+            //    {
+            //        DisplayAlert("Success", "Experience successfully deleted", "OK");
+
+            //    }
+            //    else
+            //    {
+            //        DisplayAlert("Failure", "Experience didn't delete", "OK");
+            //    }
+            //}
+
+            bool result = await Firestore.Delete(selectedPost);
+            if(result)
             {
-                conn.CreateTable<Post>();
-                int rows = conn.Delete(selectedPost);
+                _ = DisplayAlert("Success", "Experience successfully deleted", "OK");
 
-                if (rows > 0)
-                {
-                    DisplayAlert("Success", "Experience successfully deleted", "OK");
-
-                }
-                else
-                {
-                    DisplayAlert("Failure", "Experience didn't delete", "OK");
-                }
+            }
+            else
+            {
+                _ = DisplayAlert("Failure", "Experience didn't delete", "OK");
             }
         }
-    }
+        }
 }
 

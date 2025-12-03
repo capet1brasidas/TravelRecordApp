@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Plugin.Geolocator;
 using SQLite;
+using TravelRecordApp.Helpers;
 using TravelRecordApp.Logic;
 using TravelRecordApp.Model;
 using Xamarin.Forms;
@@ -16,7 +17,7 @@ namespace TravelRecordApp
 			InitializeComponent ();
 		}
 
-        void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)
+        async void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)
         {
 			try
 			{
@@ -34,31 +35,45 @@ namespace TravelRecordApp
                     VenueName = selectedVenue.name
                 };
 
-                using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                //using (SQLiteConnection conn = new SQLiteConnection(App.DatabaseLocation))
+                //{
+                //    conn.CreateTable<Post>();
+                //    int rows = conn.Insert(post);
+
+                //    if (rows > 0)
+                //    {
+                //        DisplayAlert("Success", "Experience successfully inserted", "OK");
+                //        experienceEntry.Text = "";
+
+                //    }
+                //    else
+                //    {
+                //        DisplayAlert("Failure", "Experience didn't insert", "OK");
+                //    }
+                //}
+
+                bool result = await Firestore.Insert(post);
+                if(result)
                 {
-                    conn.CreateTable<Post>();
-                    int rows = conn.Insert(post);
+                    DisplayAlert("Success", "Experience successfully inserted", "OK");
+                    experienceEntry.Text = "";
 
-                    if (rows > 0)
-                    {
-                        DisplayAlert("Success", "Experience successfully inserted", "OK");
-                        experienceEntry.Text = "";
-
-                    }
-                    else
-                    {
-                        DisplayAlert("Failure", "Experience didn't insert", "OK");
-                    }
                 }
+                else
+                {
+                    DisplayAlert("Failure", "Experience didn't insert", "OK");
+                }
+
             }
-            catch(NullReferenceException nre)
+            catch (NullReferenceException nre)
             {
-               
+                DisplayAlert("Failure", nre.ToString(), "OK");
             }
 			catch(Exception ex)
 			{
-
-			}
+                DisplayAlert("Failure", ex.Message, "OK");
+                //throw new Exception(ex.Message);
+            }
 			
         }
 

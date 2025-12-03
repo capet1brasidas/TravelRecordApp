@@ -12,6 +12,17 @@ namespace TravelRecordApp
             InitializeComponent();
 
             MainPage = new NavigationPage(new MainPage());
+            //MainPage = new ContentPage
+            //{
+            //    Content = new StackLayout
+            //    {
+            //        VerticalOptions = LayoutOptions.Center,
+            //        Children =
+            //{
+            //    new Label { Text = "测试页面（无 Firestore）", HorizontalOptions = LayoutOptions.Center }
+            //}
+            //    }
+            //};
         }
 
         public App(string databaseLocation)

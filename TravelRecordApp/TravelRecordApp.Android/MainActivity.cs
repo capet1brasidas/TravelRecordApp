@@ -5,6 +5,7 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Firebase;
 
 namespace TravelRecordApp.Droid
 {
@@ -15,14 +16,16 @@ namespace TravelRecordApp.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            //FirebaseApp.InitializeApp(this);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.FormsMaps.Init(this, savedInstanceState);
 
             string dbName = "travel_db.sqlite";
             string folderPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            string fullPath = Path.Combine(folderPath, dbName);
-            LoadApplication(new App(fullPath));
+            //string fullPath = Path.Combine(folderPath, dbName);
+            LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

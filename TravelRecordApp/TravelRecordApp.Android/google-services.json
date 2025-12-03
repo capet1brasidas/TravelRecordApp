@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "960447775956",
+    "project_id": "travelrecordapp-16f36",
+    "storage_bucket": "travelrecordapp-16f36.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960447775956:android:cff08026f7caa016fc2741",
+        "android_client_info": {
+          "package_name": "com.companyname.travelrecordapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960447775956-inf33f0v3duqj2ap3fvrbomu2d3679jt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUnm2srgB6Lx9ghw8fZxUj2rx7E1MlBuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960447775956-inf33f0v3duqj2ap3fvrbomu2d3679jt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "960447775956-pfr5tp385n0q7jpbamutju6lar7oipkg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.companyname.TravelRecordApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

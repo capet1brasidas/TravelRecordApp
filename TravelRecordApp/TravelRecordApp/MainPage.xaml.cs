@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TravelRecordApp.Helpers;
 using Xamarin.Forms;
 
 
@@ -22,7 +23,7 @@ namespace TravelRecordApp
 
         }
 
-        private void loginButton_Clicked(System.Object sender, System.EventArgs e)
+        private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
         {
             bool isEmailEmpty =  string.IsNullOrEmpty(emailEntry.Text);
             bool isPasswordEmpty = string.IsNullOrEmpty(passwordEntry.Text);
@@ -34,10 +35,13 @@ namespace TravelRecordApp
             }
             else
             {
+                //authenticate
+               bool result = await Auth.LoginUser(emailEntry.Text, passwordEntry.Text);
                 //navigate
-                Navigation.PushAsync(new HomePage());
-
-
+                if (result)
+                {
+                    Navigation.PushAsync(new HomePage());
+                }
             }
 
         }

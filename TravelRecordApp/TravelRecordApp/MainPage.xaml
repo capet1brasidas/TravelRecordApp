@@ -19,11 +19,11 @@
         <Entry x:Name="emailEntry"
                Placeholder="Email"
                TextColor="{StaticResource blueColor}"
-               Text="test"
+               Text="test@gmail.com"
                Keyboard="Email"/>
         <Entry x:Name="passwordEntry"
                Placeholder="Password"
-               Text="test"
+               Text="password123"
                 IsPassword="True"/>
         <Button x:Name="loginButton"
                 Text="Login"
