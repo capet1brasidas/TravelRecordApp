@@ -15,12 +15,10 @@ namespace TravelRecordApp
 	public partial class MapPage : ContentPage
 	{
 
-        private IGeolocator _locator;
-        public MapPage ()
+		public MapPage ()
 		{
 			InitializeComponent ();
-            _locator = CrossGeolocator.Current;
-        }
+		}
 
 		protected override void OnAppearing()
 		{
@@ -30,14 +28,6 @@ namespace TravelRecordApp
 
 			GetPosts();
 		}
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            StopListening();   // 视情况选择是否真的在离开页面时停止
-        }
-
-
 
         private async void GetPosts()
         {
@@ -85,60 +75,25 @@ namespace TravelRecordApp
 
         private async void GetLocation()
         {
-            try
-            {
-                var status = await CheckAndRequestLocationPermission();
-                if (status != PermissionStatus.Granted)
-                    return;
+		  var status = await CheckAndRequestLocationPermission();
+		  if(status == PermissionStatus.Granted)
+			{
+				var location = await Geolocation.GetLocationAsync();
 
-                // 先用 Essentials 拿一次当前位置居中
-                var location = await Geolocation.GetLocationAsync();
-                if (location != null)
-                {
-                    CenterMap(location.Latitude, location.Longitude);
-                }
+				var locator = CrossGeolocator.Current;
+				locator.PositionChanged += Locator_PositionChanged;
+				await locator.StartListeningAsync(new TimeSpan(0, 1, 0), 100);
 
-                // 避免重复挂事件：先移除再添加一次
-                _locator.PositionChanged -= Locator_PositionChanged;
-                _locator.PositionChanged += Locator_PositionChanged;
+				locationsMap.IsShowingUser = true;
 
-                // 如果已经在监听，就不要再 StartListening
-                if (!_locator.IsListening)
-                {
-                    await _locator.StartListeningAsync(TimeSpan.FromMinutes(1), 100);
-                }
+				CenterMap(location.Latitude,location.Longitude);
 
-                locationsMap.IsShowingUser = true;
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"GetLocation error: {ex}");
-            }
+			}
         }
 
-        private async void StopListening()
+        private void Locator_PositionChanged(object sender, Plugin.Geolocator.Abstractions.PositionEventArgs e)
         {
-            try
-            {
-                if (_locator == null)
-                    return;
-
-                _locator.PositionChanged -= Locator_PositionChanged;
-
-                if (_locator.IsListening)
-                {
-                    await _locator.StopListeningAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"StopListening error: {ex}");
-            }
-        }
-
-        private void Locator_PositionChanged(object sender, PositionEventArgs e)
-        {
-            CenterMap(e.Position.Latitude, e.Position.Longitude);
+			CenterMap(e.Position.Latitude, e.Position.Longitude);
         }
 
         private void CenterMap(double latitude, double longitude)
