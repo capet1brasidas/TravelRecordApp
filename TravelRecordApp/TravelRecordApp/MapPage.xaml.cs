@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
+using Plugin.Geolocator.Abstractions;
 using SQLite;
 using TravelRecordApp.Helpers;
 using TravelRecordApp.Model;
@@ -11,11 +12,13 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
 namespace TravelRecordApp
-{	
-	public partial class MapPage : ContentPage
+{
+	
+    public partial class MapPage : ContentPage
 	{
+        private IGeolocator geolocator = CrossGeolocator.Current;
 
-		public MapPage ()
+        public MapPage ()
 		{
 			InitializeComponent ();
 		}
@@ -44,11 +47,15 @@ namespace TravelRecordApp
 
         private void DisplayOnMap(List<Post> posts)
         {
-            foreach(var post in posts)
+            foreach(Post post in posts)
 			{
 				try
 				{
-                    var pinCoordinates = new Position(post.Latitude, post.Longitude);
+					if(post.Latitude == null || post.Longitude == null)
+					{
+						continue;
+					}
+                    var pinCoordinates = new Xamarin.Forms.Maps.Position(post.Latitude, post.Longitude);
 
                     var pin = new Pin()
                     {
@@ -63,11 +70,11 @@ namespace TravelRecordApp
 				}
 				catch (NullReferenceException nre)
 				{
-
+					throw new Exception(nre.Message);
 				}
 				catch (Exception ex)
 				{
-
+					throw new Exception(ex.Message);
 				}
 			
 			}
@@ -80,10 +87,12 @@ namespace TravelRecordApp
 			{
 				var location = await Geolocation.GetLocationAsync();
 
-				var locator = CrossGeolocator.Current;
-				locator.PositionChanged += Locator_PositionChanged;
-				await locator.StartListeningAsync(new TimeSpan(0, 1, 0), 100);
 
+                geolocator.PositionChanged += Locator_PositionChanged;
+				if (!geolocator.IsListening)
+				{
+                    await geolocator.StartListeningAsync(new TimeSpan(0, 1, 0), 100);
+                }
 				locationsMap.IsShowingUser = true;
 
 				CenterMap(location.Latitude,location.Longitude);
@@ -98,7 +107,7 @@ namespace TravelRecordApp
 
         private void CenterMap(double latitude, double longitude)
         {
-			Position center = new Position(latitude, longitude);
+            Xamarin.Forms.Maps.Position center = new Xamarin.Forms.Maps.Position(latitude, longitude);
 			MapSpan span = new MapSpan(center,1,1);
 
 			locationsMap.MoveToRegion(span);

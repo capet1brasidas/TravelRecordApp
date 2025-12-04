@@ -4,7 +4,6 @@ using System.Linq;
 using Plugin.Geolocator;
 using SQLite;
 using TravelRecordApp.Helpers;
-using TravelRecordApp.Logic;
 using TravelRecordApp.Model;
 using Xamarin.Forms;
 
@@ -84,7 +83,7 @@ namespace TravelRecordApp
 			var locator = CrossGeolocator.Current;
 			var position = await locator.GetPositionAsync();
 
-			var venues = await VenueLogic.GetVenues(position.Latitude,position.Longitude);
+			var venues = await VenueRoot.GetVenues(position.Latitude,position.Longitude);
 
 			venueListView.ItemsSource = venues;
 
