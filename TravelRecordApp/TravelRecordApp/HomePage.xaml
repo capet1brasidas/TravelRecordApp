@@ -3,12 +3,22 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TravelRecordApp"
+    xmlns:vm = "clr-namespace:TravelRecordApp.ViewModel"
     x:Class="TravelRecordApp.HomePage">
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <vm:HomeViewModel x:Key="vm"/>
+
+        </ResourceDictionary>
+
+    </TabbedPage.Resources>
 
     <TabbedPage.ToolbarItems>
         <ToolbarItem Text="Add"
                      IconImageSource="add.png"
-                     Clicked="ToolbarItem_Clicked" />
+                     Command="{Binding Source={StaticResource vm}, Path=NewTravelCommand}"
+                     />
 
     </TabbedPage.ToolbarItems>
 

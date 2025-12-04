@@ -19,32 +19,32 @@ namespace TravelRecordApp
             var assembly = typeof(MainPage);
 
             planeImage.Source = ImageSource.FromResource("plane.png",assembly);
-            System.Diagnostics.Debug.WriteLine("RES: " + planeImage);
+            //System.Diagnostics.Debug.WriteLine("RES: " + planeImage);
 
         }
 
-        private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
-        {
-            bool isEmailEmpty =  string.IsNullOrEmpty(emailEntry.Text);
-            bool isPasswordEmpty = string.IsNullOrEmpty(passwordEntry.Text);
+        //private async void loginButton_Clicked(System.Object sender, System.EventArgs e)
+        //{
+        //    bool isEmailEmpty =  string.IsNullOrEmpty(emailEntry.Text);
+        //    bool isPasswordEmpty = string.IsNullOrEmpty(passwordEntry.Text);
 
-            if(isEmailEmpty || isEmailEmpty)
-            {
-                //do not navigate
+        //    if(isEmailEmpty || isEmailEmpty)
+        //    {
+        //        //do not navigate
 
-            }
-            else
-            {
-                //authenticate
-               bool result = await Auth.LoginUser(emailEntry.Text, passwordEntry.Text);
-                //navigate
-                if (result)
-                {
-                    Navigation.PushAsync(new HomePage());
-                }
-            }
+        //    }
+        //    else
+        //    {
+        //        //authenticate
+        //       bool result = await Auth.LoginUser(emailEntry.Text, passwordEntry.Text);
+        //        //navigate
+        //        if (result)
+        //        {
+        //            Navigation.PushAsync(new HomePage());
+        //        }
+        //    }
 
-        }
+        //}
     }
 }
 

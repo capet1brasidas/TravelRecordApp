@@ -24,11 +24,13 @@
     <None Remove="Helpers\" />
     <None Remove="Assets\" />
     <None Remove="Assets\Images\" />
+    <None Remove="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Helpers\" />
     <Folder Include="Assets\" />
     <Folder Include="Assets\Images\" />
+    <Folder Include="ViewModel\" />
   </ItemGroup>
 </Project>

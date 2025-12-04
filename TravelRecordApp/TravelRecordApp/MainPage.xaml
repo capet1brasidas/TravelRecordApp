@@ -1,33 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TravelRecordApp.ViewModel"
              x:Class="TravelRecordApp.MainPage">
 
     <ContentPage.Resources>
-       
+       <ResourceDictionary>
+            <vm:MainViewModel x:Key="vm"/>
+
+        </ResourceDictionary>
 
     </ContentPage.Resources>
 
     <StackLayout
                  Margin="20"
-                 VerticalOptions="Center">
+                 VerticalOptions="Center"
+                  BindingContext="{StaticResource vm}">
         <Image x:Name="planeImage"
                Aspect="Fill"
                HorizontalOptions="FillAndExpand"
                HeightRequest="150"
                Margin="0,0,0,50"/>
-        <Entry x:Name="emailEntry"
+        <Entry 
                Placeholder="Email"
                TextColor="{StaticResource blueColor}"
-               Text="test@gmail.com"
+               Text="{Binding Email}"
                Keyboard="Email"/>
-        <Entry x:Name="passwordEntry"
+        <Entry 
                Placeholder="Password"
-               Text="password123"
+               Text="{Binding Password}"
                 IsPassword="True"/>
         <Button x:Name="loginButton"
                 Text="Login"
-                Clicked="loginButton_Clicked"/>
+                 Command="{Binding LoginCommand}"
+                CommandParameter="{Binding EntriesHaveText}"
+                />
 
     </StackLayout>
 

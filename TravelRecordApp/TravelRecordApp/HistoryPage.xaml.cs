@@ -5,14 +5,19 @@ using SQLite;
 using TravelRecordApp.Model;
 using Xamarin.Forms;
 using TravelRecordApp.Helpers;
+using TravelRecordApp.ViewModel;
 
 namespace TravelRecordApp
 {	
 	public partial class HistoryPage : ContentPage
-	{	
+	{
+        private HistoryViewModel vm;
+
 		public HistoryPage ()
 		{
 			InitializeComponent ();
+
+            vm = Resources["vm"] as HistoryViewModel;
 		}
 
         protected override async void OnAppearing()
@@ -24,10 +29,12 @@ namespace TravelRecordApp
             //             List<Post> posts = conn.Table<Post>().ToList();
             //             postListView.ItemsSource = posts;
             //         }
-            postListView.ItemsSource = null;
+            //postListView.ItemsSource = null;
 
-            var posts = await Firestore.Read();
-            postListView.ItemsSource = posts;
+            //var posts = await Firestore.Read();
+            //postListView.ItemsSource = posts;
+
+            await vm.GetPosts();
            
 
         }
@@ -37,7 +44,7 @@ namespace TravelRecordApp
             var selectdPost = postListView.SelectedItem as Post;
             if(selectdPost != null)
             {
-                Navigation.PushAsync(new PostDetailPage(selectdPost));
+                Navigation.PushAsync(new TravelDetailPage(selectdPost));
             }
         }
     }

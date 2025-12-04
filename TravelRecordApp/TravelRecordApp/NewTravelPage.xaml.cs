@@ -5,15 +5,19 @@ using Plugin.Geolocator;
 using SQLite;
 using TravelRecordApp.Helpers;
 using TravelRecordApp.Model;
+using TravelRecordApp.ViewModel;
 using Xamarin.Forms;
 
 namespace TravelRecordApp
 {	
 	public partial class NewTravelPage : ContentPage
-	{	
+	{
+        private NewTravelViewModel vm;
 		public NewTravelPage ()
 		{
 			InitializeComponent ();
+
+            vm = Resources["vm"] as NewTravelViewModel;
 		}
 
         async void ToolbarItem_Clicked(System.Object sender, System.EventArgs e)
@@ -80,12 +84,14 @@ namespace TravelRecordApp
         {
             base.OnAppearing();
 
-			var locator = CrossGeolocator.Current;
-			var position = await locator.GetPositionAsync();
+            var locator = CrossGeolocator.Current;
+            var position = await locator.GetPositionAsync();
 
-			var venues = await VenueRoot.GetVenues(position.Latitude,position.Longitude);
+            //var venues = await VenueRoot.GetVenues(position.Latitude,position.Longitude);
 
-			venueListView.ItemsSource = venues;
+            //venueListView.ItemsSource = venues;
+
+            await vm.GetVenues(position.Latitude,position.Longitude);
 
         }
     }

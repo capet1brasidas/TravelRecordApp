@@ -2,21 +2,33 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:TravelRecordApp.ViewModel"
     x:Class="TravelRecordApp.ProfilePage">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vm:ProfileViewModel x:Key="vm"/>
+
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
     <ContentPage.Content>
-         <StackLayout Margin="20,40,20,0">
+         <StackLayout Margin="20,40,20,0"
+                      BindingContext="{StaticResource vm}">
             <Label x:Name="postCountLabel"
                    HorizontalOptions="Center"
-                   Text="- -"
+                   Text="{Binding PostCount}"
                    TextColor="DodgerBlue"
                    FontAttributes="Bold"/>
              <Label Text="posts"
                     HorizontalOptions="Center"
                     TextColor="LightGray"/>
-             <ListView x:Name="categoriesListView">
+             <ListView x:Name="categoriesListView"
+                       ItemsSource="{Binding Categories}">
                  <ListView.ItemTemplate>
                      <DataTemplate>
-                        <TextCell Text="{Binding Path=Key}" Detail="{Binding Path=Value}"/>  
+                        <TextCell Text="{Binding Path=Name}" Detail="{Binding Path=Count}"/>  
                        
                      </DataTemplate>
                  </ListView.ItemTemplate>
